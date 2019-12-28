@@ -11,7 +11,7 @@ CREATE TABLE _user(
     email VARCHAR(150) NOT NULL,
     password VARCHAR(60) NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (user_id)
-)
+);
 
 CREATE TABLE _transaction(
     transaction_id INT AUTO_INCREMENT NOT NULL,
@@ -22,4 +22,4 @@ CREATE TABLE _transaction(
     user_id VARCHAR(10) NOT NULL,
     CONSTRAINT pk_transaction PRIMARY KEY (transaction_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES _user(user_id)
-)
+);
