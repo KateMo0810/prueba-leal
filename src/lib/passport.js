@@ -9,18 +9,17 @@ passport.use('local.login', new LocalStrategy({
     password: 'password',
     passReqToCallback: true
 }, async(req, email, password, done) => {
-
     const rows = await pool.query('SELECT * FROM _user WHERE user_id = ?', [md5(email)])
     if (rows.length > 0) {
         const user = rows[0]
         const validPassword = await helpers.matchPassword(password, user.password)
         if (validPassword) {
-            done(null, user, req.flash('success', 'Welcome ' + user.username))
+            return done(null, { email, token: "" })
         } else {
-            done(null, false, req.flash('message', 'Incorrect password'))
+            return done(null, false, { message: "La contraseña no es válida" })
         }
     } else {
-        return done(null, false, req.flash('message', 'The username does not exists'))
+        return done(null, false, { message: "El usuario no se encuentra registrado" })
     }
 }))
 
@@ -41,7 +40,7 @@ passport.use('local.register', new LocalStrategy({
     newUser.password = await helpers.encryptPassword(password)
     const row = await pool.query('SELECT * FROM _user WHERE user_id = ?', [newUser.user_id])
     if (row[0]) {
-        return done(null, false)
+        return done(null, false, { message: "El usuario ya se encuentra registrado" })
     }
     const result = await pool.query('INSERT INTO _user SET ?', [newUser])
     return done(null, newUser)

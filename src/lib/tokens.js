@@ -1,13 +1,12 @@
 var jwt = require('jsonwebtoken')
 
 module.exports = {
-    generateToken(req, res, next) {
-        const { name, email } = req.body
+    generateToken(req) {
+        const { email } = req
         var u = {
-            user_id,
             email
         }
-        return token = jwt.sign(u, 'password', {
+        return token = jwt.sign(u, 'passwordSecret', {
             expiresIn: 60 * 60 * 24 // expires in 24 hours
         })
     },
