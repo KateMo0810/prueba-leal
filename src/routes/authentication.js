@@ -1,15 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-const { generateToken, verifyToken } = require('./src/lib/tokens')
+const { generateToken, verifyToken } = require('../lib/tokens')
 
-router.post('/signup', verifyToken, passport.authenticate('local.signup', {
-    successRedirect: '/profile',
-    failureRdirect: '/signup',
-    failureFlash: true
-}))
+router.post('/register', (req, res, next) => {
+    passport.authenticate('local.register', (err, user, info) => {
+        if (!user) { return res.json({ message: "El usuario ya existe" }) }
+        res.json(user);
+    })(req, res, next);
+});
 
-router.post('/signin', generateToken, (req, res, next) => {
+
+router.post('/login', generateToken, (req, res, next) => {
     passport.authenticate('local.signin', {
         successRedirect: res.status(401).send({
             ok: false,

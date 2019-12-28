@@ -3,7 +3,7 @@ CREATE DATABASE leal_database;
 USE leal_database;
 
 CREATE TABLE _user(
-    user_id VARCHAR(10) NOT NULL,
+    user_id VARCHAR(60) NOT NULL,
     created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     name VARCHAR(12) NOT NULL,
     lastname VARCHAR(12) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE _transaction(
     created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     value FLOAT NOT NULL,
     points INT NOT NULL,
-    status INT DEFAULT 0,
+    status INT DEFAULT 1,
     user_id VARCHAR(10) NOT NULL,
     CONSTRAINT pk_transaction PRIMARY KEY (transaction_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES _user(user_id)

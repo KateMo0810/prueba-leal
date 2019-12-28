@@ -3,7 +3,7 @@ module.exports = {
         host: 'localhost',
         user: 'root',
         password: 'Lalelilolu96',
-        database: 'database_links'
+        database: 'leal_database'
     },
     port: '4000'
 }
