@@ -19,7 +19,7 @@ CREATE TABLE _transaction(
     value FLOAT NOT NULL,
     points INT NOT NULL,
     status INT DEFAULT 1,
-    user_id VARCHAR(10) NOT NULL,
+    user_id VARCHAR(60) NOT NULL,
     CONSTRAINT pk_transaction PRIMARY KEY (transaction_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES _user(user_id)
 );
