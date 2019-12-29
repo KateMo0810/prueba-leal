@@ -3,8 +3,7 @@ const router = express.Router()
 const pool = require('../../database')
 const { verifyToken } = require('../lib/tokens')
 
-router.post('/createTransaction', async(req, res) =>  {
-    console.log(req.user)
+router.post('/createTransaction', verifyToken, async(req, res) =>  {
     const { value, points, user_id } = req.body
     const newTransaction = {
         value,
@@ -17,25 +16,20 @@ router.post('/createTransaction', async(req, res) =>  {
 
 })
 
-// router.put('/inactiveTransaction', (req, res) => {
-//     const {}
-// })
-
-// router.post('/add', isLoggedIn, async(req, res) => {
-//     console.log(req)
-//     const { title, url, description } = req.body
-//     const newLink = {
-//         title,
-//         url,
-//         description,
-//         user_id: req.user.id
-//     }
-//     await pool.query('INSERT INTO links set ?', [newLink])
-//     req.flash('success', 'Link seved successfully')
-//     res.send('Yeees')
-// })
-
-
-
+router.put('/inactivateTransaction', verifyToken, async(req, res) => {
+    const { transaction_id } = req.body
+    const transaction = await pool.query('SELECT * FROM _transaction WHERE transaction_id = ?', [transaction_id])
+    if (!transaction[0]) {
+        return res.status(400).send({
+            ok: false,
+            message: 'La transacción no existe'
+        });
+    }
+    await pool.query('UPDATE _transaction SET status=0 WHERE transaction_id = ?', [transaction_id])
+    res.status(200).send({
+        ok: true,
+        message: 'Transacción inactiva'
+    });
+})
 
 module.exports = router

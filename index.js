@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 app.use(require('./src/routes/'))
 app.use(require('./src/routes/authentication'))
 app.use('/transactions', require('./src/routes/transactions'))
-    //app.use('/user', require('./src/routes/users'))
+app.use('/user', require('./src/routes/users'))
 
 app.listen(app.get('port'), () => {
     console.log('Server on port ', app.get('port'))

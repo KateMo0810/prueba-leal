@@ -11,25 +11,30 @@ module.exports = {
         })
     },
     verifyToken(req, res, next) {
+        var token1 = ""
         var token = req.headers['authorization']
         if (!token) {
-            res.status(401).send({
+            return res.status(401).send({
                 ok: false,
                 message: 'Token inválido'
             })
         }
         token = token.replace('Bearer ', '')
-        jwt.verify(token, 'password', function(err, token) {
+        jwt.verify(token, 'passwordSecret', function(err, token) {
             if (err) {
-                return res.status(401).send({
+                res.status(401).send({
                     ok: false,
                     message: 'Token inválido'
                 });
             } else {
                 req.token = token
-                next()
+                token1 = token
             }
         })
+        if (token !== "") {
+            next()
+        }
+
     }
 
 }
