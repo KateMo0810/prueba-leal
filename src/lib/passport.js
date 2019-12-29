@@ -3,12 +3,16 @@ const LocalStrategy = require('passport-local').Strategy
 const pool = require('../../database')
 const helpers = require('../lib/helpers')
 const md5 = require('md5')
+const validator = require('validator')
 
 passport.use('local.login', new LocalStrategy({
     usernameField: 'email',
     password: 'password',
     passReqToCallback: true
 }, async(req, email, password, done) => {
+    if (!validator.isEmail(email)) {
+        return done(null, false, { message: "El correo no es válido" })
+    }
     const rows = await pool.query('SELECT * FROM _user WHERE user_id = ?', [md5(email)])
     if (rows.length > 0) {
         const user = rows[0]
@@ -29,6 +33,9 @@ passport.use('local.register', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async(req, email, password, done) => {
+    if (!validator.isEmail(email)) {
+        return done(null, false, { message: "El correo no es válido" })
+    }
     const { name, lastname, birth_date } = req.body
     const newUser = {
         user_id: md5(email),
