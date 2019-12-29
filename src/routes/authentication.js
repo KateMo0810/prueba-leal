@@ -3,6 +3,7 @@ const router = express.Router()
 const passport = require('passport')
 const { generateToken, verifyToken } = require('../lib/tokens')
 
+//Register a new user
 router.post('/register', (req, res, next) => {
     passport.authenticate('local.register', (err, user, info) => {
         if (!user) { return res.json({ message: info.message }) }
@@ -10,7 +11,7 @@ router.post('/register', (req, res, next) => {
     })(req, res, next);
 });
 
-
+//Log In for the user
 router.post('/login', (req, res, next) => {
     passport.authenticate('local.login', (err, user, info) => {
         if (!user) { return res.json({ message: info.message }) }

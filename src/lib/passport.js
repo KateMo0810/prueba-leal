@@ -5,6 +5,11 @@ const helpers = require('../lib/helpers')
 const md5 = require('md5')
 const validator = require('validator')
 
+
+//Log In for the user
+// params: 
+//      email
+//      password
 passport.use('local.login', new LocalStrategy({
     usernameField: 'email',
     password: 'password',
@@ -27,7 +32,13 @@ passport.use('local.login', new LocalStrategy({
     }
 }))
 
-
+//Register a new user
+// params: 
+//      email
+//      password
+//      name
+//      lastname
+//      birth_date
 passport.use('local.register', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',

@@ -1,10 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
 const flash = require('connect-flash')
-const session = require('express-session')
-const MySQLStore = require('express-mysql-session')
 const passport = require('passport')
-const { database, port } = require('./keys')
+const { port } = require('./keys')
 
 //Inizializations
 const app = express()
@@ -32,6 +30,7 @@ app.use(require('./src/routes/'))
 app.use(require('./src/routes/authentication'))
 app.use('/transactions', require('./src/routes/transactions'))
 app.use('/user', require('./src/routes/users'))
+
 
 app.listen(app.get('port'), () => {
     console.log('Server on port ', app.get('port'))

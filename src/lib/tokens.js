@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken')
 
 module.exports = {
+    //Token generation
     generateToken(req) {
         const { email } = req
         var u = {
@@ -10,6 +11,7 @@ module.exports = {
             expiresIn: 60 * 60 * 24 // expires in 24 hours
         })
     },
+    //Token verification
     verifyToken(req, res, next) {
         var token1 = ""
         var token = req.headers['authorization']

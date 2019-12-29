@@ -6,6 +6,9 @@ const md5 = require('md5')
 const ExcelJS = require('exceljs');
 const path = require('path')
 
+//Get the transaction's history
+//params:
+//      token in header['authorization']
 router.get('/getTransactionHistory', verifyToken, async(req, res) => {
     if (req.token) {
         const id = md5(req.token.email)
@@ -15,6 +18,9 @@ router.get('/getTransactionHistory', verifyToken, async(req, res) => {
 
 })
 
+//Get the points of the active transactions
+//params:
+//      token in header['authorization']
 router.get('/getPoints', verifyToken, async(req, res) => {
     if (req.token) {
         const id = md5(req.token.email)
@@ -23,6 +29,9 @@ router.get('/getPoints', verifyToken, async(req, res) => {
     }
 })
 
+//Export the transaction's history 
+//params:
+//      token in header['authorization']
 router.get('/exportTransactionsToExcel', verifyToken, async(req, res) => {
     if (req.token) {
         const id = md5(req.token.email)

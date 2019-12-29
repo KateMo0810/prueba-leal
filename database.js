@@ -1,10 +1,10 @@
-//CONNECT TO THE DATABASE
 const mysql = require('mysql')
 const promisify = require('util.promisify')
 const { database } = require('./keys')
 
 const pool = mysql.createPool(database);
 
+//Connect to he database
 pool.getConnection((error, connection) => {
     if (error) {
         if (error.code === 'PROTOCOL_CONNECTION_LOST') {
